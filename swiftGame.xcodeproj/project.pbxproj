@@ -18,13 +18,10 @@
 		CE5E930C2718168E009A3D87 /* swiftGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E930B2718168E009A3D87 /* swiftGameTests.swift */; };
 		CE5E93162718168E009A3D87 /* swiftGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E93152718168E009A3D87 /* swiftGameUITests.swift */; };
 		CE5E93182718168E009A3D87 /* swiftGameUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E93172718168E009A3D87 /* swiftGameUITestsLaunchTests.swift */; };
-<<<<<<< HEAD
 		CE5E9325271819E6009A3D87 /* vzriv.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE5E9324271819E6009A3D87 /* vzriv.mp3 */; };
 		CE5E9327271819F8009A3D87 /* bullet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE5E9326271819F8009A3D87 /* bullet.mp3 */; };
 		CE5E933027181B5A009A3D87 /* Vzriv.sks in Resources */ = {isa = PBXBuildFile; fileRef = CE5E932E27181B5A009A3D87 /* Vzriv.sks */; };
 		CE5E933127181B5A009A3D87 /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = CE5E932F27181B5A009A3D87 /* Starfield.sks */; };
-=======
->>>>>>> main
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,13 +56,10 @@
 		CE5E93112718168E009A3D87 /* swiftGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = swiftGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE5E93152718168E009A3D87 /* swiftGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftGameUITests.swift; sourceTree = "<group>"; };
 		CE5E93172718168E009A3D87 /* swiftGameUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftGameUITestsLaunchTests.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		CE5E9324271819E6009A3D87 /* vzriv.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = vzriv.mp3; path = "../../../../Downloads/Файлы/vzriv.mp3"; sourceTree = "<group>"; };
 		CE5E9326271819F8009A3D87 /* bullet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bullet.mp3; path = "../../../../Downloads/Файлы/bullet.mp3"; sourceTree = "<group>"; };
 		CE5E932E27181B5A009A3D87 /* Vzriv.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Vzriv.sks; path = "../../../../Downloads/Файлы/Vzriv.sks"; sourceTree = "<group>"; };
 		CE5E932F27181B5A009A3D87 /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Starfield.sks; path = "../../../../Downloads/Файлы/Starfield.sks"; sourceTree = "<group>"; };
-=======
->>>>>>> main
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,13 +118,10 @@
 				CE5E92FB2718168D009A3D87 /* Main.storyboard */,
 				CE5E92FE2718168E009A3D87 /* Assets.xcassets */,
 				CE5E93002718168E009A3D87 /* LaunchScreen.storyboard */,
-<<<<<<< HEAD
 				CE5E9324271819E6009A3D87 /* vzriv.mp3 */,
 				CE5E9326271819F8009A3D87 /* bullet.mp3 */,
 				CE5E932F27181B5A009A3D87 /* Starfield.sks */,
 				CE5E932E27181B5A009A3D87 /* Vzriv.sks */,
-=======
->>>>>>> main
 			);
 			path = swiftGame;
 			sourceTree = "<group>";
@@ -256,7 +247,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
 				CE5E9327271819F8009A3D87 /* bullet.mp3 in Resources */,
 				CE5E933027181B5A009A3D87 /* Vzriv.sks in Resources */,
 				CE5E9325271819E6009A3D87 /* vzriv.mp3 in Resources */,
@@ -264,11 +254,6 @@
 				CE5E92F42718168D009A3D87 /* GameScene.sks in Resources */,
 				CE5E92FF2718168E009A3D87 /* Assets.xcassets in Resources */,
 				CE5E933127181B5A009A3D87 /* Starfield.sks in Resources */,
-=======
-				CE5E92FD2718168D009A3D87 /* Main.storyboard in Resources */,
-				CE5E92F42718168D009A3D87 /* GameScene.sks in Resources */,
-				CE5E92FF2718168E009A3D87 /* Assets.xcassets in Resources */,
->>>>>>> main
 				CE5E93022718168E009A3D87 /* LaunchScreen.storyboard in Resources */,
 				CE5E92F62718168D009A3D87 /* Actions.sks in Resources */,
 			);
