@@ -7,6 +7,7 @@
 
 import SpriteKit
 import GameplayKit
+import CoreMotion
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -23,6 +24,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let alienCategory:UInt32 = 0x1 << 1
     let bulletCategory:UInt32 = 0x1 << 0
+    
+    let motionManager = CMMotionManager()
+    var xAccelerate: CGFloat = 0
    
     override func didMove(to view: SKView) {
         starField = SKEmitterNode(fileNamed: "Starfield")
@@ -52,6 +56,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(scoreLabel)
         
         gameTimer = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)
+        
+        motionManager.accelerometerUpdateInterval = 0.2
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
+            if let accelerometrData = data {
+                let acceleation = accelerometrData.acceleration
+                
+                self.xAccelerate = CGFloat(acceleation.x) * 0.75 + self.xAccelerate * 0.25
+            }
+        }
+    }
+    
+    override func didSimulatePhysics() {
+        player.position.x += xAccelerate * 50
+        
+        if player.position.x < -350 {
+            player.position = CGPoint(x: 350, y: player.position.y)
+        } else if player.position.x > 350 {
+            player.position = CGPoint(x: -350, y: player.position.y)
+        }
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        } else {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        }
+        
+        if (firstBody.categoryBitMask & alienCategory) != 0 && (secondBody.categoryBitMask & bulletCategory) != 0 {
+            collisionElements(bulletNode: secondBody.node as! SKSpriteNode, alienNode: firstBody.node as! SKSpriteNode)
+        }
+    }
+    
+    func collisionElements(bulletNode: SKSpriteNode, alienNode: SKSpriteNode) {
+        let expression = SKEmitterNode(fileNamed: "Vzriv")
+        expression?.position = alienNode.position
+        
+        self.addChild(expression!)
+        
+        self.run(SKAction.playSoundFileNamed("bullet.mp3", waitForCompletion: false ))
+        
+        bulletNode.removeFromParent()
+        alienNode.removeFromParent()
+        
+        self.run(SKAction.wait(forDuration: 2)){
+            expression?.removeFromParent()
+        }
+        
+        score += 1
     }
   
     @objc func addAlien() {
