@@ -20,13 +20,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     var gameTimer: Timer!
+    var fireTimer: Timer!
     var aliens: [String] = ["alien", "alien2", "alien3"]
     
     let alienCategory:UInt32 = 0x1 << 1
     let bulletCategory:UInt32 = 0x1 << 0
     
-    let motionManager = CMMotionManager()
-    var xAccelerate: CGFloat = 0
+// акселерометр
+//    let motionManager = CMMotionManager()
+//    var xAccelerate: CGFloat = 0
    
     override func didMove(to view: SKView) {
         starField = SKEmitterNode(fileNamed: "Starfield")
@@ -57,25 +59,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         gameTimer = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)
         
-        motionManager.accelerometerUpdateInterval = 0.2
-        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
-            if let accelerometrData = data {
-                let acceleation = accelerometrData.acceleration
-                
-                self.xAccelerate = CGFloat(acceleation.x) * 0.75 + self.xAccelerate * 0.25
-            }
-        }
+        
+        fireTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(fireBullet), userInfo: nil, repeats: true)
+       
+  
+// акселерометр
+//        motionManager.accelerometerUpdateInterval = 0.2
+//        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
+//            if let accelerometrData = data {
+//                let acceleation = accelerometrData.acceleration
+//
+//                self.xAccelerate = CGFloat(acceleation.x) * 0.75 + self.xAccelerate * 0.25
+//            }
+//        }
     }
     
-    override func didSimulatePhysics() {
-        player.position.x += xAccelerate * 50
-        
-        if player.position.x < -350 {
-            player.position = CGPoint(x: 350, y: player.position.y)
-        } else if player.position.x > 350 {
-            player.position = CGPoint(x: -350, y: player.position.y)
-        }
-    }
+//    override func didSimulatePhysics() {
+//        player.position.x += xAccelerate * 50
+//
+//        if player.position.x < -350 {
+//            player.position = CGPoint(x: 350, y: player.position.y)
+//        } else if player.position.x > 350 {
+//            player.position = CGPoint(x: -350, y: player.position.y)
+//        }
+//    }
     
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
@@ -139,12 +146,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         alien.run(SKAction.sequence(actions))
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        fireBullet()
-    }
     
-    func fireBullet() {
-        self.run(SKAction.playSoundFileNamed("vzriv.mp3", waitForCompletion: false))
+// тап и выстрел
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        fireBullet()
+//    }
+    
+    @objc func fireBullet() {
+//звук выстрела
+//        self.run(SKAction.playSoundFileNamed("vzriv.mp3", waitForCompletion: false))
         
         let bullet = SKSpriteNode(imageNamed: "torpedo")
         bullet.position = player.position
