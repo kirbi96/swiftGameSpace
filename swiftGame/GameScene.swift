@@ -26,9 +26,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let alienCategory:UInt32 = 0x1 << 1
     let bulletCategory:UInt32 = 0x1 << 0
     
-// акселерометр
-//    let motionManager = CMMotionManager()
-//    var xAccelerate: CGFloat = 0
+    var swipe: UIPanGestureRecognizer!
+    var xSwipePosition: CGFloat = 0
+    var ySwipePosition: CGFloat = 0
+    
    
     override func didMove(to view: SKView) {
         starField = SKEmitterNode(fileNamed: "Starfield")
@@ -44,6 +45,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(player)
         
+        swipe = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom(_:)))
+        self.view!.addGestureRecognizer(swipe)
+        
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         self.physicsWorld.contactDelegate = self
         
@@ -58,31 +62,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(scoreLabel)
         
         gameTimer = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)
-        
-        
-        fireTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(fireBullet), userInfo: nil, repeats: true)
+        fireTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(fireBullet), userInfo: nil, repeats: true)
        
-  
-// акселерометр
-//        motionManager.accelerometerUpdateInterval = 0.2
-//        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
-//            if let accelerometrData = data {
-//                let acceleation = accelerometrData.acceleration
-//
-//                self.xAccelerate = CGFloat(acceleation.x) * 0.75 + self.xAccelerate * 0.25
-//            }
-//        }
     }
     
-//    override func didSimulatePhysics() {
-//        player.position.x += xAccelerate * 50
-//
-//        if player.position.x < -350 {
-//            player.position = CGPoint(x: 350, y: player.position.y)
-//        } else if player.position.x > 350 {
-//            player.position = CGPoint(x: -350, y: player.position.y)
-//        }
-//    }
+
     
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
@@ -118,6 +102,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         score += 1
     }
+    
+    @objc func handlePanFrom(_ recognizer: UIPanGestureRecognizer) {
+        if recognizer.state != .changed {
+            return
+        }
+
+        let translation = recognizer.translation(in: recognizer.view!)
+        
+        self.xSwipePosition += translation.x * 0.1
+       
+        self.ySwipePosition -= translation.y * 0.09
+    }
+    
+    override func didSimulatePhysics() {
+        player.position.x += xSwipePosition
+        player.position.y += ySwipePosition
+        
+        if player.position.x < -350 {
+            player.position = CGPoint(x: 350, y: player.position.y)
+        } else if player.position.x > 350 {
+            player.position = CGPoint(x: -350, y: player.position.y)
+        }
+              
+        
+        if player.position.y < -650 {
+            player.position = CGPoint(x: player.position.x, y: -650)
+        } else if player.position.y > 650 {
+            player.position = CGPoint(x: player.position.x, y: -650)
+        }
+        
+        self.xSwipePosition = 0
+        self.ySwipePosition = 0
+    }
   
     @objc func addAlien() {
         aliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: aliens) as! [String]
@@ -147,13 +164,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-// тап и выстрел
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        fireBullet()
-//    }
     
     @objc func fireBullet() {
-//звук выстрела
 //        self.run(SKAction.playSoundFileNamed("vzriv.mp3", waitForCompletion: false))
         
         let bullet = SKSpriteNode(imageNamed: "torpedo")
